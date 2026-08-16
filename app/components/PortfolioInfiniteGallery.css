@@ -1,0 +1,19 @@
+.infinite-gallery { position: relative; min-width: 0; height: 100%; min-height: 590px; overflow: hidden; background: radial-gradient(circle at 50% 18%, rgba(89,132,255,.32), transparent 35%), #10141d; color: white; cursor: grab; user-select: none; touch-action: pan-y; perspective: 900px; }
+.infinite-gallery:active { cursor: grabbing; }
+.infinite-gallery::before { position: absolute; z-index: 0; inset: 0; background: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 28px 28px; content: ""; mask-image: linear-gradient(to bottom, black, transparent 85%); }
+.infinite-gallery__top { position: absolute; z-index: 8; top: 15px; right: 16px; left: 16px; display: flex; justify-content: space-between; padding: 8px 10px; border: 1px solid rgba(255,255,255,.28); background: rgba(15,20,29,.64); backdrop-filter: blur(10px); font: 800 .58rem/1 "Courier New", "Microsoft YaHei", monospace; letter-spacing: .08em; }
+.infinite-gallery__track { position: absolute; top: 76px; left: 0; display: flex; align-items: center; gap: 24px; width: max-content; height: calc(100% - 108px); will-change: transform; transform-style: preserve-3d; }
+.infinite-gallery__card { --gallery-shift: 0px; --gallery-rotate: 0deg; --gallery-scale: 1; position: relative; width: clamp(210px, 17vw, 285px); margin: 0; overflow: hidden; border: 2px solid #ece8dc; background: #ece8dc; box-shadow: 10px 14px 0 rgba(0,0,0,.45); transform: translateY(var(--gallery-shift)) rotateY(var(--gallery-rotate)) scale(var(--gallery-scale)); transition: transform 120ms linear; }
+.infinite-gallery__card:nth-child(3n+1) { align-self: flex-start; margin-top: 18px; }
+.infinite-gallery__card:nth-child(3n+2) { align-self: center; }
+.infinite-gallery__card:nth-child(3n) { align-self: flex-end; margin-bottom: 18px; }
+.infinite-gallery__card img { display: block; width: 100%; aspect-ratio: 4 / 3; background: #f7f5ef; object-fit: contain; pointer-events: none; }
+.infinite-gallery__card figcaption { display: flex; align-items: center; gap: 10px; padding: 10px; border-top: 2px solid #151713; background: #f7f5ef; color: #151713; font: 800 .58rem/1.2 "Courier New", "Microsoft YaHei", monospace; }
+.infinite-gallery__card figcaption span { display: grid; width: 25px; height: 25px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #2256d8; color: white; }
+.infinite-gallery__fade { position: absolute; z-index: 6; top: 0; bottom: 0; width: 74px; pointer-events: none; }
+.infinite-gallery__fade--left { left: 0; background: linear-gradient(90deg, #10141d, transparent); }
+.infinite-gallery__fade--right { right: 0; background: linear-gradient(-90deg, #10141d, transparent); }
+
+@media (max-width: 900px) { .infinite-gallery { min-height: 590px; } .infinite-gallery__card { width: 255px; } }
+@media (max-width: 620px) { .infinite-gallery { min-height: 520px; } .infinite-gallery__card { width: 220px; } .infinite-gallery__top span:first-child { display: none; } }
+@media (prefers-reduced-motion: reduce) { .infinite-gallery__card { transform: none !important; transition: none; } }

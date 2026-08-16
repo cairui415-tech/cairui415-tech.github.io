@@ -1,0 +1,33 @@
+.pill-nav-container { position: fixed; z-index: 110; top: 16px; left: 50%; width: max-content; transform: translateX(-50%); }
+.pill-nav { display: flex; align-items: center; gap: 7px; opacity: 0; }
+.pill-logo { display: grid; width: 46px; height: 46px; place-items: center; padding: 9px; border: 2px solid var(--pill-base); border-radius: 50%; background: var(--pill-bg); box-shadow: 4px 4px 0 var(--pill-base); overflow: hidden; }
+.pill-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.pill-list { display: flex; height: 46px; gap: 4px; padding: 4px; border: 2px solid var(--pill-base); border-radius: 999px; background: var(--pill-base); box-shadow: 4px 4px 0 rgba(25,26,24,.18); }
+.pill-list li { display: flex; }
+.pill { position: relative; display: grid; min-width: 67px; height: 100%; padding: 0 15px; place-items: center; overflow: hidden; border-radius: 999px; background: var(--pill-bg); color: var(--pill-text); font: 800 .69rem/1 "Courier New", "Microsoft YaHei", monospace; }
+.hover-circle { position: absolute; z-index: 0; left: 50%; bottom: -75px; width: 140px; height: 140px; border-radius: 50%; background: var(--pill-base); transform: translateX(-50%) scale(0); transform-origin: center bottom; transition: transform .42s cubic-bezier(.22,1,.36,1); }
+.label-stack { position: relative; z-index: 1; display: block; height: 1em; overflow: hidden; }
+.label-stack > span { display: block; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.label-stack > span + span { color: var(--pill-hover-text); }
+.pill:hover .hover-circle, .pill:focus-visible .hover-circle { transform: translateX(-50%) scale(1.2); }
+.pill:hover .label-stack > span, .pill:focus-visible .label-stack > span { transform: translateY(-100%); }
+.pill.is-active::after { position: absolute; bottom: 4px; width: 5px; height: 5px; border-radius: 50%; background: var(--pill-base); content: ""; }
+.pill-menu, .pill-mobile { display: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+@media (max-width: 760px) {
+  .pill-nav-container { top: 10px; width: calc(100% - 24px); }
+  .pill-nav { justify-content: space-between; width: 100%; }
+  .pill-list { display: none; }
+  .pill-menu { display: grid; width: 46px; height: 46px; padding: 13px; place-content: center; gap: 4px; border: 2px solid var(--pill-base); border-radius: 50%; background: var(--pill-bg); box-shadow: 4px 4px 0 var(--pill-base); }
+  .pill-menu > span:not(.sr-only) { display: block; width: 17px; height: 2px; background: var(--pill-base); }
+  .pill-mobile { position: absolute; top: 55px; right: 0; left: 0; padding: 6px; border: 2px solid var(--pill-base); border-radius: 22px; background: var(--pill-base); box-shadow: 6px 6px 0 rgba(25,26,24,.18); }
+  .pill-mobile.is-open { display: grid; }
+  .pill-mobile a { padding: 12px 15px; border-radius: 16px; background: var(--pill-bg); color: var(--pill-text); font: 800 .75rem/1 "Courier New", "Microsoft YaHei", monospace; }
+  .pill-mobile a + a { margin-top: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-nav { opacity: 1; }
+  .hover-circle, .label-stack > span { transition: none; }
+}
