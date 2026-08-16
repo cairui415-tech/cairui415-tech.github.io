@@ -19,4 +19,3 @@ Publish the existing portfolio at `https://cairui415-tech.github.io/` so the URL
 - `npm test` passes.
 - `npm run export:static` creates `out/index.html`, `out/404.html`, `.nojekyll`, media, CSS, and JavaScript.
 - The GitHub Pages deployment reports `built` and the public URL returns HTTP 200.
-

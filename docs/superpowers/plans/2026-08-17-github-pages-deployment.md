@@ -141,4 +141,3 @@ Request `https://cairui415-tech.github.io/`, confirm HTTP 200, open it in the in
 - Spec coverage: all requirements map to Tasks 1-4.
 - Placeholder scan: no TBD, TODO, or deferred implementation steps remain.
 - Type consistency: `scripts/export-static.mjs` is the single producer of `out/`; both tests and deployment consume that path.
-
