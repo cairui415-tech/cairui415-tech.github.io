@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function Experience({ profile, experiences }: Props) {
-  const preferredOrder = ["上观新闻", "德邦基金", "元诚私募"];
+  const preferredOrder = ["哔哩哔哩", "上观新闻", "德邦基金", "元诚私募"];
   const orderedExperiences = [...experiences].sort((a, b) => {
     const rank = (organization: string) => preferredOrder.findIndex((name) => organization.includes(name));
     return rank(a.organization) - rank(b.organization);
@@ -26,7 +26,7 @@ export function Experience({ profile, experiences }: Props) {
         <WindowFrame title="READ_ME.TXT" meta="PROFILE" className="profile-window">
           <div className="profile-window__body">
             <ProfileCard
-              avatarUrl="/profile/cai-rui-profile.png"
+              avatarUrl="/profile/cai-rui-2026.jpg"
               name={profile.name}
               title="Research · Data · AI"
               handle="cairui"

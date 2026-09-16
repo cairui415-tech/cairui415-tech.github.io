@@ -4,7 +4,7 @@ import { WindowFrame } from "./WindowFrame";
 export function Projects({ projects }: { projects: Project[] }) {
   return (
     <section className="section projects" id="projects" aria-labelledby="projects-title">
-      <div className="section-index section-index--light"><span>02</span><p>SELECTED WORK / 4 FILES</p></div>
+      <div className="section-index section-index--light"><span>02</span><p>{`SELECTED WORK / ${projects.length} FILES`}</p></div>
       <div className="section-heading section-heading--split">
         <h2 id="projects-title">精选项目</h2>
         <p>从真实材料中提取证据，再把结论变成产品、研究或内容方案。向下滚动，逐个打开我的工作文件。</p>
@@ -26,7 +26,37 @@ export function Projects({ projects }: { projects: Project[] }) {
                     <img src={image.src} alt={image.alt} loading="lazy" />
                     <figcaption>0{imageIndex + 1} / 0{project.images?.length}</figcaption>
                   </figure>
-                )) : (
+                )) : project.visual === "workflow" ? (
+                  <div className="workflow-visual" data-project-visual="workflow" aria-label="联运素材工作台脱敏产品界面">
+                    <div className="workflow-visual__chrome"><span>联运素材工作台</span><small>AI WORKFLOW · READY</small></div>
+                    <div className="workflow-visual__tabs"><b>01 素材自动分类</b><span>02 CP 需求单生成</span></div>
+                    <div className="workflow-visual__body">
+                      <div className="workflow-dropzone"><span>ZIP / 7Z / RAR</span><strong>拖入素材压缩包</strong><small>识别 → 分类 → 校验</small></div>
+                      <div className="workflow-steps" aria-label="产品流程">
+                        <i>01<em>文件识别</em></i><b>→</b><i>02<em>素材自动分类</em></i><b>→</b><i>03<em>CP 需求单生成</em></i>
+                      </div>
+                      <div className="workflow-output"><span>OUTPUT</span><b>TXT / EXCEL</b><small>实时预览 · 一键复制 · 下载交付</small></div>
+                    </div>
+                  </div>
+                ) : project.visual === "sql" ? (
+                  <div className="sql-visual" data-project-visual="sql" aria-label="Olist 电商经营与用户价值分析示意">
+                    <div className="sql-visual__editor">
+                      <span>olist_analysis.sql</span>
+                      <code><i>WITH</i> customer_value <i>AS</i> (</code>
+                      <code>&nbsp;&nbsp;<i>SELECT</i> customer_id,</code>
+                      <code>&nbsp;&nbsp;SUM(payment_value) <i>OVER</i> (...)</code>
+                      <code>&nbsp;&nbsp;<i>FROM</i> orders JOIN payments</code>
+                      <code>) <i>SELECT</i> * <i>FROM</i> customer_value;</code>
+                    </div>
+                    <div className="sql-visual__dashboard">
+                      <div><strong>10万+</strong><span>订单记录</span></div>
+                      <div><strong>9 张关联表</strong><span>数据建模</span></div>
+                      <div><strong>CTE</strong><span>复杂查询</span></div>
+                      <div><strong>窗口函数</strong><span>用户价值</span></div>
+                    </div>
+                    <div className="sql-visual__metrics"><span>GMV</span><span>客单价</span><span>复购率</span><span>履约及时率</span></div>
+                  </div>
+                ) : (
                   <div className="research-visual" aria-label="AI 共情研究关键数据">
                     <span>AI EMPATHY</span><b>N = 240</b><div><i>社会支持 ↑</i><i>预期违背 ↑</i></div><small>社会框架提示 → 修复意愿显著提升</small>
                   </div>

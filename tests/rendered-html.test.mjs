@@ -21,7 +21,7 @@ test("server-renders a readable Chinese portfolio without mojibake", async () =>
   assert.equal(response.status, 200);
   assert.match(html, /<html[^>]*lang="zh-CN"/i);
   assert.match(html, /蔡睿/);
-  assert.match(html, /数据驱动的复合型人才/);
+  assert.match(html, /AI 与数据驱动的复合型人才/);
   assert.doesNotMatch(html, /钄|锝|绛|€|codex-preview|react-loading-skeleton/i);
 });
 
@@ -63,8 +63,8 @@ test("uses resume wording for every internship", async () => {
     "运用Choice、Wind等金融终端采集核验产业数据",
     "协助投研团队分析消费及新能源板块",
     "使用金融终端获取财务及估值数据",
-    "借助AI工具辅助脚本创作与数据分析",
-    "监测各平台实时新闻",
+    "使用大模型辅助信息检索、脚本初稿与数据总结",
+    "监测跨平台热点与舆情",
   ]) {
     assert.match(html, new RegExp(text));
   }
@@ -138,20 +138,28 @@ test("keeps navigation, contact actions, and reduced-motion support accessible",
   assert.match(css, /overflow-x:\s*hidden/);
 });
 
-test("renders the interactive profile card with the edited portrait", async () => {
+test("renders the interactive profile card with the current portrait and resume facts", async () => {
   const html = await (await render()).text();
 
   assert.match(html, /data-profile-card="cai-rui"/);
-  assert.match(html, /\/profile\/cai-rui-profile\.png/);
+  assert.match(html, /\/profile\/cai-rui-2026\.jpg/);
+  assert.match(html, /GPA 3\.75 \/ 4\.0/);
+  assert.match(html, /二等奖学金/);
+  assert.match(html, /预计 2027\.06 毕业/);
   assert.match(html, /联系我/);
 });
 
-test("places Shangguan News before the fund internships", async () => {
+test("places Bilibili and Shangguan News before the fund internships", async () => {
   const html = await (await render()).text();
   const experienceLog = html.slice(html.indexOf("EXPERIENCE.LOG"), html.indexOf('id="projects"'));
 
+  assert.ok(experienceLog.indexOf("哔哩哔哩") < experienceLog.indexOf("解放日报 · 上观新闻编辑中心"));
   assert.ok(experienceLog.indexOf("解放日报 · 上观新闻编辑中心") < experienceLog.indexOf("德邦基金管理有限公司"));
   assert.ok(experienceLog.indexOf("德邦基金管理有限公司") < experienceLog.indexOf("元诚私募基金管理有限公司"));
+  assert.match(experienceLog, /游戏联运实习生/);
+  assert.match(experienceLog, /Codex/);
+  assert.match(experienceLog, /20%\+/);
+  assert.match(experienceLog, /2025\.07 — 2025\.09/);
 });
 
 test("shows focused BYD research evidence inside the Debon Fund internship", async () => {
@@ -164,11 +172,11 @@ test("shows focused BYD research evidence inside the Debon Fund internship", asy
   assert.match(debonBlock, /比亚迪深度研究/);
 });
 
-test("uses the data-driven positioning and an image-based infinite hero gallery", async () => {
+test("uses the AI and data-driven positioning and an image-based infinite hero gallery", async () => {
   const html = await (await render()).text();
   const hero = html.slice(html.indexOf('class="hero"'), html.indexOf('id="about"'));
 
-  assert.match(hero, /数据驱动的复合型人才/);
+  assert.match(hero, /AI 与数据驱动的复合型人才/);
   assert.match(hero, /data-gallery="infinite"/);
   assert.match(hero, /拖动探索作品/);
   assert.match(hero, /\/works\/retirement-data-02\.png/);
@@ -223,6 +231,34 @@ test("labels each project window with its actual project name", async () => {
   assert.doesNotMatch(html, /WORK_0[1-4]\./);
   for (const title of ["养老焦虑数据新闻", "星芽 AI 产品原型", "AI 音频产业研究", "AI 共情实验研究"]) {
     assert.match(html, new RegExp(title));
+  }
+});
+
+test("adds sanitized workflow and SQL projects before legacy work", async () => {
+  const html = await (await render()).text();
+  const projects = html.slice(html.indexOf('id="projects"'), html.indexOf('id="evidence"'));
+
+  assert.match(projects, /SELECTED WORK \/ 6 FILES/);
+  assert.ok(projects.indexOf("联运素材工作台") < projects.indexOf("养老焦虑数据新闻"));
+  assert.match(projects, /data-project-visual="workflow"/);
+  assert.match(projects, /素材自动分类/);
+  assert.match(projects, /CP 需求单生成/);
+  assert.match(projects, /TXT \/ EXCEL/);
+  assert.doesNotMatch(projects, /720[×x]280|1080[×x]608|catalog\.json/);
+
+  assert.match(projects, /Olist 电商经营与用户价值分析/);
+  assert.match(projects, /data-project-visual="sql"/);
+  assert.match(projects, /10万\+/);
+  assert.match(projects, /9 张关联表/);
+  assert.match(projects, /CTE/);
+  assert.match(projects, /窗口函数/);
+});
+
+test("shows the expanded AI and data toolchain", async () => {
+  const html = await (await render()).text();
+
+  for (const skill of ["Vibe Coding", "SQL", "Python", "MySQL", "Navicat", "DBeaver", "Julius AI"]) {
+    assert.match(html, new RegExp(skill));
   }
 });
 
